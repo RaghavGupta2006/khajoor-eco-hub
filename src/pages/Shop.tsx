@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import productImage from "@/assets/coffee-product.jpg";
+import image1 from "@/assets/1.jpg";
+import image2 from "@/assets/2.jpg";
+import image3 from "@/assets/3.jpg";
 import { toast } from "sonner";
+import { supabase } from "@/lib/supabase";
 
 const Shop = () => {
   const [formData, setFormData] = useState({
@@ -15,11 +18,62 @@ const Shop = () => {
     email: "",
     quantity: "1",
   });
+  const [emailSignup, setEmailSignup] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubscribing, setIsSubscribing] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const imageRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const images = [image1, image2, image3];
+
+  useEffect(() => {
+    const scrollContainer = scrollContainerRef.current;
+    if (!scrollContainer) return;
+
+    const handleScroll = () => {
+      const scrollLeft = scrollContainer.scrollLeft;
+      const containerWidth = scrollContainer.clientWidth;
+      const newIndex = Math.round(scrollLeft / containerWidth);
+      setCurrentImageIndex(newIndex);
+    };
+
+    scrollContainer.addEventListener("scroll", handleScroll);
+    return () => scrollContainer.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const scrollToImage = (index: number) => {
+    const scrollContainer = scrollContainerRef.current;
+    const imageContainer = imageRefs[index].current;
+    if (scrollContainer && imageContainer) {
+      imageContainer.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "start" });
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    toast.success("Order request received! We'll contact you soon.");
-    setFormData({ name: "", phone: "", email: "", quantity: "1" });
+    setIsSubmitting(true);
+
+    try {
+      const { error } = await supabase.from("contacts").insert({
+        full_name: formData.name,
+        contact_number: formData.phone,
+        email_address: formData.email,
+        quantity: parseInt(formData.quantity),
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      toast.success("Order request received! We'll contact you soon.");
+      setFormData({ name: "", phone: "", email: "", quantity: "1" });
+    } catch (error: any) {
+      console.error("Error submitting order:", error);
+      toast.error(error.message || "Failed to submit order. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,11 +89,42 @@ const Shop = () => {
           {/* Product Section */}
           <div className="grid md:grid-cols-2 gap-12 mb-20">
             <div>
-              <img
-                src={productImage}
-                alt="Khajoor Date Seed Coffee"
-                className="w-full rounded-lg shadow-lg"
-              />
+              {/* Horizontal Scroll Gallery */}
+              <div 
+                ref={scrollContainerRef}
+                className="overflow-x-auto snap-x snap-mandatory scrollbar-hide scroll-smooth"
+              >
+                <div className="flex gap-4 pb-4">
+                  {images.map((image, index) => (
+                    <div 
+                      key={index}
+                      ref={imageRefs[index]}
+                      className="flex-shrink-0 w-full snap-center"
+                    >
+                      <img
+                        src={image}
+                        alt={`Khajoor Date Seed Coffee - Image ${index + 1}`}
+                        className="w-full h-[400px] md:h-[500px] object-cover rounded-lg shadow-lg transition-transform hover:scale-[1.02]"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+              {/* Pagination Dots */}
+              <div className="flex justify-center gap-2 mt-4">
+                {images.map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => scrollToImage(index)}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${
+                      currentImageIndex === index
+                        ? "bg-accent w-8"
+                        : "bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                    }`}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
             <div>
               <h1 className="text-4xl font-heading font-bold mb-4">
@@ -139,8 +224,13 @@ const Shop = () => {
                   />
                 </div>
 
-                <Button type="submit" className="w-full bg-accent hover:bg-accent/90" size="lg">
-                  REQUEST ORDER
+                <Button
+                  type="submit"
+                  className="w-full bg-accent hover:bg-accent/90"
+                  size="lg"
+                  disabled={isSubmitting}
+                >
+                  {isSubmitting ? "Submitting..." : "REQUEST ORDER"}
                 </Button>
               </form>
             </CardContent>
@@ -189,15 +279,44 @@ const Shop = () => {
                 Subscribe for Launch Alerts
               </h3>
               <form
-                onSubmit={(e) => {
+                onSubmit={async (e) => {
                   e.preventDefault();
-                  toast.success("Thank you for subscribing!");
+                  setIsSubscribing(true);
+
+                  try {
+                    const { error } = await supabase.from("emails").insert({
+                      email_address: emailSignup,
+                    });
+
+                    if (error) {
+                      throw error;
+                    }
+
+                    toast.success("Thank you for subscribing!");
+                    setEmailSignup("");
+                  } catch (error: any) {
+                    console.error("Error subscribing:", error);
+                    toast.error(error.message || "Failed to subscribe. Please try again.");
+                  } finally {
+                    setIsSubscribing(false);
+                  }
                 }}
                 className="flex gap-2"
               >
-                <Input type="email" placeholder="Your email address" required />
-                <Button type="submit" className="bg-accent hover:bg-accent/90">
-                  Subscribe
+                <Input
+                  type="email"
+                  placeholder="Your email address"
+                  value={emailSignup}
+                  onChange={(e) => setEmailSignup(e.target.value)}
+                  required
+                  disabled={isSubscribing}
+                />
+                <Button
+                  type="submit"
+                  className="bg-accent hover:bg-accent/90"
+                  disabled={isSubscribing}
+                >
+                  {isSubscribing ? "Subscribing..." : "Subscribe"}
                 </Button>
               </form>
             </CardContent>
