@@ -1,7 +1,7 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
-import { Phone, MapPin, Store } from "lucide-react";
+import { Phone, MapPin, Store, Mail } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
@@ -49,14 +49,14 @@ const Contact = () => {
                   <Phone className="h-6 w-6 text-accent" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-heading font-bold mb-4">Phone</h2>
+                  <h2 className="text-2xl font-heading font-bold mb-4">Phone & Email</h2>
                   <div className="space-y-3">
                     <a
-                      href="tel:8178244698"
+                      href="tel:+91 8178244698"
                       className="flex items-center gap-2 text-lg hover:text-accent transition-colors"
                     >
                       <Phone className="h-5 w-5" />
-                      8178244698
+                      +91 8178244698
                     </a>
                     <a
                       href="tel:+919289920466"
@@ -64,6 +64,15 @@ const Contact = () => {
                     >
                       <Phone className="h-5 w-5" />
                       +91 92899 20466
+                    </a>
+                    <a
+                      href="https://mail.google.com/mail/?view=cm&to=projectkhajoorenactus@gmail.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 text-lg hover:text-accent transition-colors"
+                    >
+                      <Mail className="h-5 w-5" />
+                      projectkhajoorenactus@gmail.com
                     </a>
                   </div>
                 </div>
