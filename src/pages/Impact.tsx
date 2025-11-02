@@ -2,7 +2,6 @@ import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import circularImage from "@/assets/circular-economy.jpg";
-import okImage from "@/assets/ok.jpg";
 import { Users, Recycle, Heart, TrendingUp, Leaf } from "lucide-react";
 
 const Impact = () => {
@@ -64,20 +63,6 @@ const Impact = () => {
             <p className="text-lg text-muted-foreground leading-relaxed text-center">
               Every purchase supports these women and their families, creating a ripple effect of positive change in our communities.
             </p>
-          </div>
-          {/* Image with aesthetic frame */}
-          <div className="flex justify-center mt-12">
-            <div className="relative max-w-2xl w-full">
-              <div className="p-4 bg-background rounded-lg shadow-2xl border-2 border-accent/20">
-                <div className="p-2 bg-card rounded-md">
-                  <img
-                    src={okImage}
-                    alt="Empowering women and communities"
-                    className="w-full h-auto rounded-md shadow-lg object-cover"
-                  />
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

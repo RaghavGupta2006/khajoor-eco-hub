@@ -64,13 +64,13 @@ const About = () => {
             <h2 className="text-3xl font-heading font-bold mb-6 text-center">Our Story</h2>
             <div className="space-y-4 text-lg text-muted-foreground">
               <p>
-                Born from the vision of Enactus at IGDTUW, Project Khajoor represents more than just a business—it's a movement towards conscious consumption and community empowerment.
+                Born from Enactus IGDTUW, Project Khajoor is a movement promoting conscious consumption and empowering communities through sustainable business practices.
               </p>
               <p>
-                We saw an opportunity where others saw waste. Date seeds, typically discarded as agricultural waste, became the foundation of our innovative coffee alternative. This transformation embodies our core belief: nothing should go to waste when it can create value.
+                Where others saw waste, we saw opportunity. By transforming discarded date seeds into a unique coffee alternative, we turned waste into value—reflecting our belief that sustainability begins with innovation.
               </p>
               <p>
-                Our journey began with training programs for women in our community, providing them with skills and opportunities to become entrepreneurs in their own right. Today, these women form the backbone of our operations, managing packaging units from their homes while maintaining work-life balance.
+                Our journey began by training women in our community, empowering them with entrepreneurial skills. Today, they lead our operations, managing packaging units from home while balancing work and family life.
               </p>
               <p>
                 Every product we create, every person we employ, and every seed we process is a step towards a more sustainable, equitable future. We're not just selling coffee—we're brewing change, one cup at a time.

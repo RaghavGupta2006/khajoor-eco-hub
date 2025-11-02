@@ -17,10 +17,10 @@ const Navigation = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border">
+    <nav className="sticky top-0 z-50 bg-card backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-2xl font-heading font-bold text-primary">
+          <Link to="/" className="text-2xl font-heading font-bold text-foreground">
             Project Khajoor
           </Link>
 
@@ -33,7 +33,7 @@ const Navigation = () => {
                 className={cn(
                   "text-sm font-medium transition-colors hover:text-accent",
                   location.pathname === link.path
-                    ? "text-accent"
+                    ? "text-accent font-semibold"
                     : "text-foreground"
                 )}
               >
@@ -41,7 +41,7 @@ const Navigation = () => {
               </Link>
             ))}
             <Link to="/shop">
-              <Button variant="default" className="bg-accent hover:bg-accent/90">
+              <Button variant="default" className="bg-accent hover:bg-accent/90 text-white">
                 Shop Now
               </Button>
             </Link>
@@ -49,7 +49,7 @@ const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden"
+            className="md:hidden text-foreground"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
             <Menu className="h-6 w-6" />
@@ -66,7 +66,7 @@ const Navigation = () => {
                 className={cn(
                   "block text-sm font-medium transition-colors hover:text-accent",
                   location.pathname === link.path
-                    ? "text-accent"
+                    ? "text-accent font-semibold"
                     : "text-foreground"
                 )}
                 onClick={() => setMobileMenuOpen(false)}
@@ -75,7 +75,7 @@ const Navigation = () => {
               </Link>
             ))}
             <Link to="/shop" onClick={() => setMobileMenuOpen(false)}>
-              <Button variant="default" className="w-full bg-accent hover:bg-accent/90">
+              <Button variant="default" className="w-full bg-accent hover:bg-accent/90 text-white">
                 Shop Now
               </Button>
             </Link>

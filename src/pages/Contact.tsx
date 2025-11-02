@@ -69,7 +69,7 @@ const Contact = () => {
                       href="https://mail.google.com/mail/?view=cm&to=projectkhajoorenactus@gmail.com"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 text-lg hover:text-accent transition-colors"
+                      className="flex items-center gap-2 text-lg hover:text-accent transition-colors break-all"
                     >
                       <Mail className="h-5 w-5" />
                       projectkhajoorenactus@gmail.com

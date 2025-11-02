@@ -30,10 +30,7 @@ const Home = () => {
           <p className="text-xl md:text-2xl mb-8 opacity-90">
             A Zero-Waste, Women-Led Circular Economy.
           </p>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-95">
-            Project Khajoor transforms discarded date seeds into a healthy, naturally sweet coffee alternative.
-          </p>
-          <Link to="/shop">
+          <Link to="/shop" className="mt-12 inline-block">
             <Button size="lg" className="bg-accent hover:bg-accent/90 text-white text-lg px-8 py-6">
               SHOP DATE SEED COFFEE
             </Button>
